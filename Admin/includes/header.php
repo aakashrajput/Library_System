@@ -1,3 +1,19 @@
+<?php
+session_start();
+  if (!isset($_SESSION['admin_username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: .././index.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['admin_username']);
+    header("location: .././index.php");
+  }
+?>
+<?php include ("db.php");
+$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +43,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="./index.html">
-        <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        <img src="../images/rrce-logo.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -46,7 +62,7 @@
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg
+                <img alt="Image placeholder" src="../assets/img/theme/team-1-800x800.jpg
 ">
               </span>
             </div>
@@ -86,7 +102,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="./index.html">
-                <img src="./assets/img/brand/blue.png">
+                <img src="./images/rrce-logo.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -111,17 +127,17 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item  class=" active" ">
-          <a class=" nav-link active " href=" ./index.html"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+          <a class=" nav-link active " href=" ./book_lists.php"> <i class="ni ni-tv-2 text-primary"></i> Book Lists
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
-              <i class="ni ni-planet text-blue"></i> Icons
+            <a class="nav-link " href="add_books.php">
+              <i class="ni ni-planet text-blue"></i> Add Books
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="./examples/maps.html">
-              <i class="ni ni-pin-3 text-orange"></i> Maps
+              <i class="ni ni-pin-3 text-orange"></i> Track Books
             </a>
           </li>
           <li class="nav-item">
@@ -134,23 +150,14 @@
               <i class="ni ni-bullet-list-67 text-red"></i> Tables
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./examples/login.html">
-              <i class="ni ni-key-25 text-info"></i> Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./examples/register.html">
-              <i class="ni ni-circle-08 text-pink"></i> Register
-            </a>
-          </li>
+
         </ul>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">Documentation</h6>
+        <!--h6 class="navbar-heading text-muted">Documentation</h6>
         <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
+        <!--ul class="navbar-nav mb-md-3">
           <li class="nav-item">
             <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
               <i class="ni ni-spaceship"></i> Getting started
@@ -166,7 +173,7 @@
               <i class="ni ni-ui-04"></i> Components
             </a>
           </li>
-        </ul>
+        </ul-->
       </div>
     </div>
   </nav>
@@ -193,10 +200,13 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="./assets/img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold"> <?php  if (isset($_SESSION['admin_username'])) : ?>
+                            <?php echo $_SESSION['admin_username']; ?>
+               <?php endif ?>
+                  </span>
                 </div>
               </div>
             </a>
@@ -221,7 +231,7 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a  href="?logout='1'" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
