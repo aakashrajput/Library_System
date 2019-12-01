@@ -48,12 +48,12 @@ if (isset($_POST['reg_user'])) {
   if (count($errors) == 0) {
     $password = md5($password_1);//encrypt the password before saving in the database
 
-    $query = "INSERT INTO user_reg (reg_date, username, email, password, role, tandc)
-          VALUES('$reg_date', '$username', '$email', '$password', 'student','true')";
+    $query = "INSERT INTO user_reg (username, email, password, reg_date, name, sem, department, profile_pic)
+          VALUES('$username', '$email', '$password', '$reg_date', '', '', '', '')";
     mysqli_query($db, $query);
     $_SESSION['username'] = $username;
     $_SESSION['success'] = "You are now logged in";
-    header('location: ./User/');
+    header('location: ./Students/');
   }
 }
 
@@ -73,12 +73,12 @@ if (isset($_POST['login_user'])) {
 
   if (count($errors) == 0) {
     $password = md5($password);
-    $query = "SELECT * FROM user_reg WHERE username='$username' AND password='$password' AND role = 'student'";
+    $query = "SELECT * FROM user_reg WHERE username='$username' AND password='$password'";
     $results = mysqli_query($db, $query);
     if (mysqli_num_rows($results) == 1) {
       $_SESSION['username'] = $username;
       $_SESSION['success'] = "You are now logged in";
-      header('location: ./User/');
+      header('location: ./Students/');
     }else {
       array_push($errors, "Wrong username/password combination");
     }
