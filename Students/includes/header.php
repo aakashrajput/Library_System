@@ -136,8 +136,8 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/maps.html">
-              <i class="ni ni-pin-3 text-orange"></i> Track Books
+            <a class="nav-link " href="./request_status.php">
+              <i class="ni ni-bullet-list-67 text-red"></i>Book Request Status
             </a>
           </li>
           <li class="nav-item">
@@ -145,12 +145,6 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
               <i class="ni ni-single-02 text-yellow"></i> User profile
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="./examples/tables.html">
-              <i class="ni ni-bullet-list-67 text-red"></i> Tables
-            </a>
-          </li>
-
         </ul>
         <!-- Divider -->
         <hr class="my-3">

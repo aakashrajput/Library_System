@@ -1,3 +1,6 @@
+<?php include ("db.php");
+$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+?>
 <?php
 session_start();
   if (!isset($_SESSION['admin_username'])) {
@@ -9,10 +12,25 @@ session_start();
     unset($_SESSION['admin_username']);
     header("location: .././index.php");
   }
+
+
+  if(isset($_GET['approve'])){
+    $approve_id = $_GET['approve'];
+    $approve_check_query = "SELECT * FROM book_issue WHERE id = $approve_id";
+    $approve_check_run = mysqli_query($link, $approve_check_query);
+    if(mysqli_num_rows($approve_check_run) > 0){
+      $approve_query = "UPDATE `book_issue` SET `issue_status` = 'Approved' WHERE `book_issue`.`id` = $approve_id";
+      if(mysqli_query($link,$approve_query)){
+        $msg = "Book has been Approved for the Student";
+      } else {
+        $error = "Book has not been Approved";
+      }
+    }else {
+      header ("location: index.php");
+    }
+  }
 ?>
-<?php include ("db.php");
-$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,21 +154,15 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/maps.html">
-              <i class="ni ni-pin-3 text-orange"></i> Track Books
+            <a class="nav-link " href="./issue_request.php">
+              <i class="ni ni-pin-3 text-orange"></i> Issue Requests
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/profile.html">
-              <i class="ni ni-single-02 text-yellow"></i> User profile
+            <a class="nav-link " href="./student_list.php">
+              <i class="ni ni-single-02 text-yellow"></i> Registered Students
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="./examples/tables.html">
-              <i class="ni ni-bullet-list-67 text-red"></i> Tables
-            </a>
-          </li>
-
         </ul>
         <!-- Divider -->
         <hr class="my-3">
